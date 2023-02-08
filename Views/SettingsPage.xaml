@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="CoolGuys.Views.SettingsPage"
+             x:Name="settingsView"
+             Title="Profil">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="qrcode.png" Command="{Binding CreateQrCommand}" />
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+    <Grid Padding="5,10" RowDefinitions="4*,5*" BackgroundColor="{StaticResource Primary}">
+        <Grid Grid.Row="0" Padding="20,0">
+
+            <Frame Margin="0,50,0,0" Padding="20,50" BorderColor="LightGray" BackgroundColor="LightGray">
+                <Grid ColumnDefinitions="*,*">
+                    <StackLayout Grid.ColumnSpan="2" x:Name="detailsStack" Spacing="0" VerticalOptions="Center" Margin="5,0,0,20">
+                        <Label Text="Email" FontAttributes="Bold" />
+                        <Label Text="{Binding CurrentUser.Email}" />
+                        <Label Text="Imię" FontAttributes="Bold" />
+                        <Label Text="{Binding CurrentUser.FirstName}" />
+                        <Label Text="Nazwisko" FontAttributes="Bold" />
+                        <Label Text="{Binding CurrentUser.LastName}" />
+                    </StackLayout>
+                    <StackLayout x:Name="detailsStackEdit" IsVisible="False" Spacing="5">
+                        <Label Text="Imię"/>
+                        <Frame CornerRadius="10" Padding="5,0" BackgroundColor="White" >
+                            <Entry Text="{Binding EditFirstName}" x:Name="firstName" Placeholder="{Binding CurrentUser.FirstName}"/>
+                        </Frame>
+                        <Label Text="Nazwisko"/>
+                        <Frame CornerRadius="10" Padding="5,0" BackgroundColor="White">
+                            <Entry Text="{Binding EditLastName}" x:Name="lastName" Placeholder="{Binding CurrentUser.LastName}"/>
+                        </Frame>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+            <Label Margin="20,70,0,0" Text="Dane osobowe" FontAttributes="Bold" FontSize="20" />
+            <HorizontalStackLayout Padding="10" HorizontalOptions="End" Spacing="10" VerticalOptions="End">
+                <Button Text="Edytuj" BackgroundColor="{StaticResource Secondary}" Clicked="EditClicked"/>
+                <Button Text="Wyloguj" Command="{Binding LogOutCommand}" />
+            </HorizontalStackLayout>
+            <Grid RowDefinitions="100" ColumnDefinitions="100" HorizontalOptions="End" VerticalOptions="Start">
+                <Frame CornerRadius="50" WidthRequest="100" HeightRequest="100" Padding="0"
+                       Margin="20,0">
+
+                    <Image Aspect="AspectFill" WidthRequest="100">
+                        <Image.Source>
+                            <UriImageSource Uri="{Binding CurrentUser.avatar}" CachingEnabled="False" />
+                        </Image.Source>
+                    </Image>
+                </Frame>
+                <ImageButton VerticalOptions="End" WidthRequest="30" HeightRequest="30" CornerRadius="15"
+                             HorizontalOptions="End" BackgroundColor="Black" Clicked="AvatarAdd">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="+" Color="White" Size="100" />
+                    </ImageButton.Source>
+                </ImageButton>
+            </Grid>
+        </Grid>
+        <Frame Grid.Row="1" Margin="20,10,20,5" Padding="20" BackgroundColor="LightGray">
+            <Grid RowDefinitions="50,*">
+
+                <FlexLayout JustifyContent="SpaceBetween" Padding="20" AlignItems="Center" HeightRequest="50">
+                    <Label Text="Znajomi" FontAttributes="Bold" FontSize="20" />
+                    <Button Text="Dodaj znajomego" HeightRequest="40" Command="{Binding AddFriendCommand}" />
+                </FlexLayout>
+                <CollectionView Grid.Row="1" ItemsSource="{Binding Friends}" Margin="0,10">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.EmptyView>
+                        <Label Padding="10" Text="Brak znajomych" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItemView
+                                        Command="{Binding Source={x:Reference settingsView}, Path=BindingContext.DeleteFriendCommand}"
+                                        CommandParameter="{Binding Id}">
+                                        <Frame CornerRadius="15" BackgroundColor="IndianRed">
+                                            <Label TextColor="White" Text="Usuń" FontSize="14"
+                                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                        </Frame>
+                                    </SwipeItemView>
+
+                                </SwipeView.RightItems>
+                                <Frame Padding="0">
+                                    <HorizontalStackLayout Padding="10,5" Spacing="10">
+                                        <Frame HeightRequest="40" WidthRequest="40" Margin="10" Padding="0"
+                                               CornerRadius="30">
+                                            <Image Aspect="AspectFill">
+                                                <Image.Source>
+                                                    <UriImageSource Uri="{Binding avatar}" CachingEnabled="False" />
+                                                </Image.Source>
+                                            </Image>
+                                        </Frame>
+                                        <StackLayout Spacing="0" VerticalOptions="Center">
+                                            <Label VerticalTextAlignment="Center">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding FirstName}" FontSize="16" />
+                                                        <Span Text=" " FontSize="16" />
+                                                        <Span Text="{Binding LastName}" FontSize="16" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Label Text="{Binding Email}" TextColor="DimGray" />
+                                        </StackLayout>
+                                    </HorizontalStackLayout>
+                                </Frame>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </Grid>
+        </Frame>
+    </Grid>
+</ScrollView>
+</ContentPage>

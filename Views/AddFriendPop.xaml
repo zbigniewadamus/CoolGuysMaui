@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mopup:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+        xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups" xmlns:Animations="clr-namespace:Mopups.Animations;assembly=Mopups"        
+             Shell.NavBarIsVisible="True"
+             Title="Zeskanuj kod znajomego"
+             x:Class="CoolGuys.Views.AddFriendPop"
+                 BackgroundColor="#cc000000"
+             BackgroundInputTransparent="False"
+             CloseWhenBackgroundIsClicked="True">
+    <mopup:PopupPage.Animation>
+        <Animations:MoveAnimation PositionIn="Bottom" PositionOut="Bottom" />
+    </mopup:PopupPage.Animation>
+
+    <Grid BackgroundColor="White" ColumnDefinitions="*,350,*" RowDefinitions="*,350,*" ColumnSpacing="0" RowSpacing="0" VerticalOptions="End" Padding="0,0,0,50">
+        <StackLayout Grid.Column="1" Spacing="10" Padding="0,20">
+            <Label Text="Wyszukiwanie znajomych" FontSize="24" FontAttributes="Bold"/>
+            <Frame Margin="0,5">
+                <StackLayout Spacing="10">
+                    <Label Text="Email"/>
+                    <Frame Padding="0">
+                        <Grid ColumnDefinitions="*,AUTO">
+                            <Entry Text="{Binding Email}" Margin="10,0" Placeholder="Email"/>
+                            <Button Text="Szukaj" HorizontalOptions="End" Command="{Binding SearchFriendCommand}"/>
+                        </Grid>
+                    </Frame>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+        <Frame Padding="0" Grid.Column="1" Grid.Row="1">
+            <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*,*">
+                <zxing:CameraBarcodeReaderView x:Name="qrScanner" BarcodesDetected="OnScan" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+                <Frame BackgroundColor="Transparent" BorderColor="Black" Grid.Row="1" Grid.Column="1"/>
+                <Label Text="Umieść QR w kwadraciku" Grid.Row="2" Grid.ColumnSpan="3" HorizontalOptions="Center" BackgroundColor="White" VerticalOptions="Start" Padding="5" Margin="5"/>
+            </Grid>
+        </Frame>
+    </Grid>
+</mopup:PopupPage>

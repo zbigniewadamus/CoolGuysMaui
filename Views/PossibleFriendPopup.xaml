@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<pages:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:pages="clr-namespace:Mopups.Pages;assembly=Mopups"
+                  xmlns:animations="clr-namespace:Mopups.Animations;assembly=Mopups"
+                  x:Class="CoolGuys.Views.PossibleFriendPopup"             
+                  BackgroundColor="#cc000000"
+                  BackgroundInputTransparent="False"
+                  CloseWhenBackgroundIsClicked="True"
+                  >
+    <pages:PopupPage.Animation>
+        <animations:MoveAnimation PositionIn="Bottom" PositionOut="Bottom" />
+    </pages:PopupPage.Animation>
+    <Border Padding="20,10,20,60" BackgroundColor="{StaticResource Secondary}" VerticalOptions="End" HorizontalOptions="Fill" Stroke="Transparent">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="15,15,0,0"/>
+        </Border.StrokeShape>
+        <StackLayout Spacing="10">
+            <Label Text="{Binding FullName}" FontSize="22" Padding="0,20,0,0" HorizontalTextAlignment="Center" TextColor="White"/>
+            <Label Text="{Binding Email}" FontSize="16" HorizontalTextAlignment="Center" TextColor="LightGray"/>
+            <Frame WidthRequest="200" HeightRequest="200" Padding="0" CornerRadius="15" BackgroundColor="White">
+                <Image Source="{Binding Avatar}" Aspect="AspectFill"/>
+            </Frame>
+            <Button Text="Dodaj" HorizontalOptions="Center" Margin="0,20" Clicked="Add"/>
+        </StackLayout>
+
+    </Border>
+</pages:PopupPage>

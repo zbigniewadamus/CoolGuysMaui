@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             x:Class="CoolGuys.Views.MainPage"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.Resources>
+        <Style x:Key="frameEntry" TargetType="Frame">
+            <Setter Property="BorderColor" Value="Gray"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="HasShadow" Value="False"></Setter>
+        </Style>
+    </ContentPage.Resources>
+    <Grid BackgroundColor="{StaticResource Primary}" RowDefinitions="1*,4*,2*,AUTO" Padding="0,20,0,0">
+        <Image Source="logo_square_transparent.png" WidthRequest="150" HeightRequest="150"
+               HorizontalOptions="Start" />
+        <skia:SKLottieView x:Name="animationLaugh" Grid.Row="1" Source="laugh.json" RepeatMode="Restart" RepeatCount="-1" WidthRequest="350"
+                           HeightRequest="350" />
+        <Label Grid.Row="2" Padding="10,5" TextColor="White"
+               Text="Zarejestruj się, zaproś znajomych i utwórzcie swoje własne źródło dobrego humoru"
+               FontAttributes="Bold,Italic" FontSize="16" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+        <Border Margin="-1" VerticalOptions="End" Padding="0,20" Grid.Row="3">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="15,15,0,0" />
+            </Border.StrokeShape>
+            <Grid Padding="40,0" RowDefinitions="auto">
+                <VerticalStackLayout VerticalOptions="End" Spacing="5">
+                    <Button Clicked="ShowDataForm" FontSize="25" Text="Zarejestruj się" />
+                    <Button Clicked="ShowDataForm" BackgroundColor="{StaticResource Secondary}" TextColor="White" Text="Zaloguj się" />
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+        <Frame x:Name="DataForm" IsVisible="False" Grid.Row="1" Grid.RowSpan="3" Padding="10,20" Margin="0">
+            <StackLayout Padding="10,20" Spacing="10">
+                <Label FontAttributes="Bold" FontSize="25" Text="Wprowadź dane" Margin="0,10"/>
+                <Frame Style="{StaticResource frameEntry}">
+                    <Entry Keyboard="Email" Placeholder="Email" Text="{Binding Email}" />
+                </Frame>
+                <Frame Style="{StaticResource frameEntry}">
+                    <Entry IsPassword="True" Placeholder="Hasło" Text="{Binding Password}" />
+                </Frame>
+                <Frame x:Name="confirmPassword" IsVisible="False" Style="{StaticResource frameEntry}">
+                    <Entry IsPassword="True" Placeholder="Potwierdź hasło" Text="{Binding ConfirmPassword}" />
+                </Frame>
+                <Grid  ColumnDefinitions="2*,1*" ColumnSpacing="10">
+                    <Button x:Name="submitButton" Text="Zarejestuj" Padding="5,15" CornerRadius="15" Command="{Binding SubmitCommand}"/>
+                    <Button Clicked="HideDataForm" Text="Wróć" TextTransform="None" Grid.Column="1" BackgroundColor="{StaticResource Secondary}" CornerRadius="15"/>
+                </Grid>
+            </StackLayout>
+        </Frame>
+    </Grid>
+
+</ContentPage>
